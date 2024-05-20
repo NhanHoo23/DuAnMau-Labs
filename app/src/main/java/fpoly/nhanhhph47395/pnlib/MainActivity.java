@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import fpoly.nhanhhph47395.pnlib.fragment.ChangePassFragment;
+
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawer;
@@ -64,8 +66,14 @@ public class MainActivity extends AppCompatActivity {
                     setTitle("Thêm người dùng");
                 } else if (item.getItemId() == R.id.sub_Pass) {
                     setTitle("Đổi mật khẩu");
-                } else if (item.getItemId() == R.id.sub_Logout) {
+                    ChangePassFragment changePassFragment = new ChangePassFragment();
+                    manager.beginTransaction()
+                            .replace(R.id.flContent, changePassFragment)
+                            .commit();
 
+                } else if (item.getItemId() == R.id.sub_Logout) {
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    finish();
                 } else {
 
                 }

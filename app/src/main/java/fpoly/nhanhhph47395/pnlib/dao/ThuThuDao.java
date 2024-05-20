@@ -52,7 +52,7 @@ public class ThuThuDao {
 
         while(c.moveToNext()) {
             ThuThu thuThu = new ThuThu();
-            thuThu.setMaTT(c.getString(c.getColumnIndex("maTV")));
+            thuThu.setMaTT(c.getString(c.getColumnIndex("maTT")));
             thuThu.setHoTen(c.getString(c.getColumnIndex("hoTen")));
             thuThu.setMatKhau(c.getString(c.getColumnIndex("matKhau")));
 
@@ -69,7 +69,7 @@ public class ThuThuDao {
 
     public ThuThu getID(String ID) {
         String sql = "select * from THUTHU where maTT = ?";
-        List<ThuThu> list = getData(sql);
+        List<ThuThu> list = getData(sql, ID);
         return list.get(0);
     }
 
