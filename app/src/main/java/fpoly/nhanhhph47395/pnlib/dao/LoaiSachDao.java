@@ -38,8 +38,8 @@ public class LoaiSachDao {
         return db.update("LOAISACH", values, "maLoai=?", new String[]{String.valueOf(loaiSach.getMaLoai())});
     }
 
-    public int delete(LoaiSach loaiSach) {
-        return db.delete("LOAISACH", "maLoai = ?", new String[]{String.valueOf(loaiSach.getMaLoai())});
+    public int delete(String ID) {
+        return db.delete("LOAISACH", "maLoai = ?", new String[]{String.valueOf(ID)});
     }
 
     @SuppressLint("Range")
@@ -65,7 +65,7 @@ public class LoaiSachDao {
 
     public LoaiSach getID(String ID) {
         String sql = "select * from LOAISACH where maLoai = ?";
-        List<LoaiSach> list = getData(sql);
+        List<LoaiSach> list = getData(sql, ID);
         return list.get(0);
     }
 }

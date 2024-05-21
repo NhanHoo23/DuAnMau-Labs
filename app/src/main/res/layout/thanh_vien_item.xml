@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvMaTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MaTV"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTenTV"
+            android:text="TenTV"
+            android:textSize="14dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvNamSinh"
+            android:text="NamSinh"
+            android:textSize="14dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_weight="1"
+        android:id="@+id/imgDeleteLS"
+        android:src="@drawable/ic_delete"/>
+    
+</LinearLayout>

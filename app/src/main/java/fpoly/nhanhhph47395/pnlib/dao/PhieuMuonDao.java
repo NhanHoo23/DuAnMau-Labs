@@ -89,7 +89,7 @@ public class PhieuMuonDao {
 
     public PhieuMuon getID(String ID) {
         String sql = "select * from PHIEUMUON where maPM = ?";
-        List<PhieuMuon> list = getData(sql);
+        List<PhieuMuon> list = getData(sql, ID);
         return list.get(0);
     }
 

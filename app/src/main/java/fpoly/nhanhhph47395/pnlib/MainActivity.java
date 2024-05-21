@@ -18,6 +18,9 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 
 import fpoly.nhanhhph47395.pnlib.fragment.ChangePassFragment;
+import fpoly.nhanhhph47395.pnlib.fragment.LoaiSachFragment;
+import fpoly.nhanhhph47395.pnlib.fragment.SachFragment;
+import fpoly.nhanhhph47395.pnlib.fragment.ThanhVienFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,10 +57,22 @@ public class MainActivity extends AppCompatActivity {
                     setTitle("Quản lý Phiếu Mượn");
                 } else if (item.getItemId() == R.id.nav_LoaiSach) {
                     setTitle("Quản lý Loại Sách");
+                    LoaiSachFragment loaiSachFragment = new LoaiSachFragment();
+                    manager.beginTransaction()
+                            .replace(R.id.flContent, loaiSachFragment)
+                            .commit();
                 } else if (item.getItemId() == R.id.nav_Sach) {
                     setTitle("Quản lý Sách");
+                    SachFragment sachFragment = new SachFragment();
+                    manager.beginTransaction()
+                            .replace(R.id.flContent, sachFragment)
+                            .commit();
                 } else if (item.getItemId() == R.id.nav_ThanhVien) {
                     setTitle("Quản lý Thành Viên");
+                    ThanhVienFragment thanhVienFragment = new ThanhVienFragment();
+                    manager.beginTransaction()
+                            .replace(R.id.flContent, thanhVienFragment)
+                            .commit();
                 } else if (item.getItemId() == R.id.sub_Top) {
                     setTitle("Top 10 sách cho thuê nhiều nhất");
                 } else if (item.getItemId() == R.id.sub_DoanhThu) {

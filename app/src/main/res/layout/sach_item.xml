@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvMaSach"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sach"
+            android:textSize="14dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTenSach"
+            android:text="TenSach"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvGiaThue"
+            android:text="GiaThue"
+            android:textSize="14dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvLoaiSach"
+            android:text="LoaiSach"
+            android:textSize="14dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="85dp"
+        android:layout_weight="1"
+        android:id="@+id/imgDeleteLS"
+        android:src="@drawable/ic_delete"/>
+
+</LinearLayout>

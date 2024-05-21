@@ -41,8 +41,8 @@ public class SachDao {
         return db.update("SACH", values, "maSach=?", new String[]{String.valueOf(sach.getMaSach())});
     }
 
-    public int delete(Sach sach) {
-        return db.delete("Sach", "maSach = ?", new String[]{String.valueOf(sach.getMaSach())});
+    public int delete(String ID) {
+        return db.delete("SACH", "maSach = ?", new String[]{String.valueOf(ID)});
     }
 
     @SuppressLint("Range")

@@ -40,8 +40,8 @@ public class ThanhVienDao {
         return db.update("THANHVIEN", values, "maTV=?", new String[]{String.valueOf(thanhVien.getMaTV())});
     }
 
-    public int delete(ThanhVien thanhVien) {
-        return db.delete("THANHVIEN", "maTV = ?", new String[]{String.valueOf(thanhVien.getMaTV())});
+    public int delete(String id) {
+        return db.delete("THANHVIEN", "maTV = ?", new String[]{String.valueOf(id)});
     }
 
     @SuppressLint("Range")
@@ -68,7 +68,7 @@ public class ThanhVienDao {
 
     public ThanhVien getID(String ID) {
         String sql = "select * from THANHVIEN where maTV = ?";
-        List<ThanhVien> list = getData(sql);
+        List<ThanhVien> list = getData(sql, ID);
         return list.get(0);
     }
 }
