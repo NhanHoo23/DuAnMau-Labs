@@ -81,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(this, "Login thành công", Toast.LENGTH_SHORT).show();
                 rememberUser(strUser, strPass, chkRememberPass.isChecked());
                 Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                i.putExtra("user", strUser);
                 startActivity(i);
                 finish();
             } else {

@@ -70,7 +70,7 @@ public class SachDao {
 
     public Sach getID(String ID) {
         String sql = "select * from SACH where maSach = ?";
-        List<Sach> list = getData(sql);
+        List<Sach> list = getData(sql, ID);
         return list.get(0);
     }
 }

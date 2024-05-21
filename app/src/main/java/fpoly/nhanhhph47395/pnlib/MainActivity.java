@@ -17,10 +17,16 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import fpoly.nhanhhph47395.pnlib.dao.PhieuMuonDao;
+import fpoly.nhanhhph47395.pnlib.dao.ThuThuDao;
 import fpoly.nhanhhph47395.pnlib.fragment.ChangePassFragment;
+import fpoly.nhanhhph47395.pnlib.fragment.DoanhThuFragment;
 import fpoly.nhanhhph47395.pnlib.fragment.LoaiSachFragment;
+import fpoly.nhanhhph47395.pnlib.fragment.PhieuMuonFragment;
 import fpoly.nhanhhph47395.pnlib.fragment.SachFragment;
 import fpoly.nhanhhph47395.pnlib.fragment.ThanhVienFragment;
+import fpoly.nhanhhph47395.pnlib.fragment.TopFragment;
+import fpoly.nhanhhph47395.pnlib.models.ThuThu;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private View mHeaderView;
     private TextView edUser;
+
+    private PhieuMuonDao phieuMuonDao;
+    private ThuThuDao thuThuDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,19 +51,31 @@ public class MainActivity extends AppCompatActivity {
         ab.setHomeAsUpIndicator(R.drawable.menu);
         ab.setDisplayHomeAsUpEnabled(true);
 
+        FragmentManager manager = getSupportFragmentManager();
+        setTitle("Quản lý Phiếu Mượn");
+        PhieuMuonFragment phieuMuonFragment = new PhieuMuonFragment();
+        manager.beginTransaction()
+                .replace(R.id.flContent, phieuMuonFragment)
+                .commit();
+
         NavigationView nv = findViewById(R.id.nvView);
         mHeaderView = nv.getHeaderView(0);
         edUser = mHeaderView.findViewById(R.id.txtUser);
         Intent i = getIntent();
-        edUser.setText("Welcome!");
+        String user = i.getStringExtra("user");
+        thuThuDao = new ThuThuDao(this);
+        ThuThu thuThu = thuThuDao.getID(user);
+        edUser.setText("Welcome! " + thuThu.getHoTen());
 
         nv.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                FragmentManager manager = getSupportFragmentManager();
-
                 if (item.getItemId() == R.id.nav_PhieuMuon) {
                     setTitle("Quản lý Phiếu Mượn");
+                    PhieuMuonFragment phieuMuonFragment = new PhieuMuonFragment();
+                    manager.beginTransaction()
+                            .replace(R.id.flContent, phieuMuonFragment)
+                            .commit();
                 } else if (item.getItemId() == R.id.nav_LoaiSach) {
                     setTitle("Quản lý Loại Sách");
                     LoaiSachFragment loaiSachFragment = new LoaiSachFragment();
@@ -75,8 +96,16 @@ public class MainActivity extends AppCompatActivity {
                             .commit();
                 } else if (item.getItemId() == R.id.sub_Top) {
                     setTitle("Top 10 sách cho thuê nhiều nhất");
+                    TopFragment topFragment = new TopFragment();
+                    manager.beginTransaction()
+                            .replace(R.id.flContent, topFragment)
+                            .commit();
                 } else if (item.getItemId() == R.id.sub_DoanhThu) {
                     setTitle("Thống kê doanh thu");
+                    DoanhThuFragment doanhThuFragment = new DoanhThuFragment();
+                    manager.beginTransaction()
+                            .replace(R.id.flContent, doanhThuFragment)
+                            .commit();
                 } else if (item.getItemId() == R.id.sub_AddUser) {
                     setTitle("Thêm người dùng");
                 } else if (item.getItemId() == R.id.sub_Pass) {
