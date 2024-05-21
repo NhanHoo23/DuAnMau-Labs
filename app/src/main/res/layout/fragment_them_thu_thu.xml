@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".fragment.ChangePassFragment"
+    tools:context=".fragment.ThemThuThuFragment"
     android:layout_margin="16dp">
 
     <ImageView
@@ -14,21 +14,33 @@
         android:layout_marginTop="50dp"
         android:layout_marginBottom="20dp"
         android:layout_gravity="center"
-        android:src="@drawable/ic_pass"/>
+        android:src="@drawable/ic_adduser"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:passwordToggleEnabled="true"
         android:layout_marginBottom="20dp"
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mật khẩu cũ"
-            android:id="@+id/edPassOld"
-            android:inputType="textPassword"
+            android:hint="Tên đăng nhập"
+            android:id="@+id/edUserName"
+            android:maxLines="1"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Họ và tên"
+            android:id="@+id/edFullname"
             android:maxLines="1"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -43,8 +55,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mật khẩu mới"
-            android:id="@+id/edPassChange"
+            android:hint="Mật khẩu"
+            android:id="@+id/edPass"
             android:inputType="textPassword"
             android:maxLines="1"/>
 
@@ -61,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nhập lại mật khẩu"
-            android:id="@+id/edRePassChange"
+            android:id="@+id/edRePass"
             android:inputType="textPassword"
             android:maxLines="1"/>
 
@@ -76,7 +88,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnSaveUserChange"
+            android:id="@+id/btnSaveUser"
             android:drawableStart="@drawable/ic_save"
             android:text="Lưu"
             android:textSize="20dp"
@@ -85,7 +97,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btnCancelUserChange"
+            android:id="@+id/btnCancelUser"
             android:drawableStart="@drawable/ic_cancel"
             android:text="Hủy"
             android:textSize="20dp"

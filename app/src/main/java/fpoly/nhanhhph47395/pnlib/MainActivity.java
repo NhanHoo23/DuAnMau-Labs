@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import fpoly.nhanhhph47395.pnlib.fragment.LoaiSachFragment;
 import fpoly.nhanhhph47395.pnlib.fragment.PhieuMuonFragment;
 import fpoly.nhanhhph47395.pnlib.fragment.SachFragment;
 import fpoly.nhanhhph47395.pnlib.fragment.ThanhVienFragment;
+import fpoly.nhanhhph47395.pnlib.fragment.ThemThuThuFragment;
 import fpoly.nhanhhph47395.pnlib.fragment.TopFragment;
 import fpoly.nhanhhph47395.pnlib.models.ThuThu;
 
@@ -35,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private View mHeaderView;
     private TextView edUser;
 
-    private PhieuMuonDao phieuMuonDao;
     private ThuThuDao thuThuDao;
+    private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         mHeaderView = nv.getHeaderView(0);
         edUser = mHeaderView.findViewById(R.id.txtUser);
         Intent i = getIntent();
-        String user = i.getStringExtra("user");
+        user = i.getStringExtra("user");
         thuThuDao = new ThuThuDao(this);
         ThuThu thuThu = thuThuDao.getID(user);
         edUser.setText("Welcome! " + thuThu.getHoTen());
@@ -108,6 +110,10 @@ public class MainActivity extends AppCompatActivity {
                             .commit();
                 } else if (item.getItemId() == R.id.sub_AddUser) {
                     setTitle("Thêm người dùng");
+                    ThemThuThuFragment themThuThuFragment = new ThemThuThuFragment();
+                    manager.beginTransaction()
+                            .replace(R.id.flContent, themThuThuFragment)
+                            .commit();
                 } else if (item.getItemId() == R.id.sub_Pass) {
                     setTitle("Đổi mật khẩu");
                     ChangePassFragment changePassFragment = new ChangePassFragment();
@@ -127,6 +133,14 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        //Set visible
+        Menu navMenu = nv.getMenu();
+        if (user.equals("admin")) {
+            navMenu.findItem(R.id.sub_AddUser).setVisible(true);
+        } else {
+            navMenu.findItem(R.id.sub_AddUser).setVisible(false);
+        }
     }
 
     @Override
