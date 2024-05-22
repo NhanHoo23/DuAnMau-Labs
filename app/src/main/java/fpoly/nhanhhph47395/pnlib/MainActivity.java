@@ -124,8 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.sub_Logout) {
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                     finish();
-                } else {
-
                 }
 
                 drawer.closeDrawers();
@@ -135,11 +133,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //Set visible
-        Menu navMenu = nv.getMenu();
         if (user.equals("admin")) {
-            navMenu.findItem(R.id.sub_AddUser).setVisible(true);
+            nv.getMenu().findItem(R.id.sub_AddUser).setVisible(true);
         } else {
-            navMenu.findItem(R.id.sub_AddUser).setVisible(false);
+            nv.getMenu().findItem(R.id.sub_AddUser).setVisible(false);
         }
     }
 

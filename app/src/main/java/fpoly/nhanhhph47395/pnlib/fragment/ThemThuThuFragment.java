@@ -1,7 +1,5 @@
 package fpoly.nhanhhph47395.pnlib.fragment;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -60,7 +58,6 @@ public class ThemThuThuFragment extends Fragment {
                     } else {
                         Toast.makeText(getContext(), "Lưu thất bại ", Toast.LENGTH_SHORT).show();
                     }
-
                 }
             }
         });

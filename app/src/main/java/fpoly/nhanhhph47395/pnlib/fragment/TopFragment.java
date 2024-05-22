@@ -29,11 +29,16 @@ public class TopFragment extends Fragment {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_top, container, false);
         lvTop = v.findViewById(R.id.lvTop);
+
+        capNhatLV();
+
+        return v;
+    }
+
+    void capNhatLV() {
         ThongKeDao thongKeDao = new ThongKeDao(getActivity());
         list = (List<Top>) thongKeDao.getTop();
         adapter = new TopAdapter(getActivity(), this, list);
         lvTop.setAdapter(adapter);
-
-        return v;
     }
 }
