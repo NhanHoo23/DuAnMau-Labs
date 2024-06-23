@@ -11,6 +11,6 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/bookicon"/>
+        android:src="@drawable/bookicon" />
 
 </LinearLayout>

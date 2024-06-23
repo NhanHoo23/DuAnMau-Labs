@@ -21,6 +21,7 @@ public class PhieuMuonDao {
     private SQLiteDatabase db;
     private Context context;
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat stf = new SimpleDateFormat("HH:mm");
     public PhieuMuonDao() {
     }
 
@@ -33,9 +34,11 @@ public class PhieuMuonDao {
     public long insert(PhieuMuon phieuMuon) {
         ContentValues values = new ContentValues();
         values.put("maTT", phieuMuon.getMaTT());
+        values.put("maBienLai", phieuMuon.getMaBienLai());
         values.put("maTV", phieuMuon.getMaTV());
         values.put("maSach", phieuMuon.getMaSach());
         values.put("ngay", sdf.format(phieuMuon.getNgay()));
+        values.put("gioMuonSach", stf.format(phieuMuon.getGioMuonSach()));
         values.put("giaThue", phieuMuon.getTienThue());
         values.put("traSach", phieuMuon.getTraSach());
 
@@ -45,9 +48,11 @@ public class PhieuMuonDao {
     public int update(PhieuMuon phieuMuon) {
         ContentValues values = new ContentValues();
         values.put("maTT", phieuMuon.getMaTT());
+        values.put("maBienLai", phieuMuon.getMaBienLai());
         values.put("maTV", phieuMuon.getMaTV());
         values.put("maSach", phieuMuon.getMaSach());
         values.put("ngay", sdf.format(phieuMuon.getNgay()));
+        values.put("gioMuonSach", stf.format(phieuMuon.getGioMuonSach()));
         values.put("giaThue", phieuMuon.getTienThue());
         values.put("traSach", phieuMuon.getTraSach());
 
@@ -67,12 +72,14 @@ public class PhieuMuonDao {
             PhieuMuon phieuMuon = new PhieuMuon();
             phieuMuon.setMaPM(Integer.parseInt(c.getString(c.getColumnIndex("maPM"))));
             phieuMuon.setMaTT(c.getString(c.getColumnIndex("maTT")));
+            phieuMuon.setMaBienLai(c.getString(c.getColumnIndex("maBienLai")));
             phieuMuon.setMaTV(Integer.parseInt(c.getString(c.getColumnIndex("maTV"))));
             phieuMuon.setMaSach(Integer.parseInt(c.getString(c.getColumnIndex("maSach"))));
             phieuMuon.setTraSach(Integer.parseInt(c.getString(c.getColumnIndex("traSach"))));
             phieuMuon.setTienThue(Integer.parseInt(c.getString(c.getColumnIndex("giaThue"))));
             try {
                 phieuMuon.setNgay(sdf.parse(c.getString(c.getColumnIndex("ngay"))));
+                phieuMuon.setGioMuonSach(stf.parse(c.getString(c.getColumnIndex("gioMuonSach"))));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -81,6 +88,11 @@ public class PhieuMuonDao {
         }
 
         return list;
+    }
+
+    public List<PhieuMuon> filterSearch(String query) {
+            String sql = "Select PM.* from PHIEUMUON as PM join SACH as S on PM.maSach = S.maSach where tenSach like ?";
+            return getData(sql, "%" + query + "%");
     }
 
     public List<PhieuMuon> getAll() {

@@ -5,21 +5,25 @@ import java.util.Date;
 public class PhieuMuon {
     private int maPM;
     private String maTT;
+    private String maBienLai;
     private int maTV;
     private int maSach;
     private Date ngay;
+    private Date gioMuonSach;
     private int tienThue;
     private int traSach;
 
     public PhieuMuon() {
     }
 
-    public PhieuMuon(int maPM, String maTT, int maTV, int maSach, Date ngay, int tienThue, int traSach) {
+    public PhieuMuon(int maPM, String maTT, int maTV, int maSach, Date ngay, Date gioMuonSach, String maBienLai, int tienThue, int traSach) {
         this.maPM = maPM;
         this.maTT = maTT;
         this.maTV = maTV;
         this.maSach = maSach;
         this.ngay = ngay;
+        this.gioMuonSach = gioMuonSach;
+        this.maBienLai = maBienLai;
         this.tienThue = tienThue;
         this.traSach = traSach;
     }
@@ -78,5 +82,21 @@ public class PhieuMuon {
 
     public void setTraSach(int traSach) {
         this.traSach = traSach;
+    }
+
+    public Date getGioMuonSach() {
+        return gioMuonSach;
+    }
+
+    public void setGioMuonSach(Date gioMuonSach) {
+        this.gioMuonSach = gioMuonSach;
+    }
+
+    public String getMaBienLai() {
+        return maBienLai;
+    }
+
+    public void setMaBienLai(String maBienLai) {
+        this.maBienLai = maBienLai;
     }
 }

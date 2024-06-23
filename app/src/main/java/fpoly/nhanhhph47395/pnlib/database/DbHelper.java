@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 public class DbHelper extends SQLiteOpenHelper {
 
     public DbHelper(Context context) {
-        super(context, "QuanLyThuVien", null, 1);
+        super(context, "QuanLyThuVien", null, 4);
     }
 
     @Override
@@ -56,6 +56,8 @@ public class DbHelper extends SQLiteOpenHelper {
                 "maSach integer references SACH(maSach)," +
                 "giaThue integer not null," +
                 "ngay date not null," +
+                "gioMuonSach TIMESTAMP not null," +
+                "maBienLai text not null," +
                 "traSach integer not null)";
         db.execSQL(tPhieuMuon);
     }

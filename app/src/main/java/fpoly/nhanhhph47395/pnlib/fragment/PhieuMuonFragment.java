@@ -9,6 +9,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,13 +48,14 @@ import fpoly.nhanhhph47395.pnlib.models.ThanhVien;
 public class PhieuMuonFragment extends Fragment {
     private ListView lvPM;
     private List<PhieuMuon> list;
+    private List<PhieuMuon> temp;
     private Dialog dialog;
     private FloatingActionButton fab;
-    private EditText edMaPM;
+    private EditText edMaPM, edMaBienLai, edSearch;
     private Spinner spTV, spSach;
     private TextView tvNgay, tvTienThue;
     private CheckBox chkTraSach;
-    private Button btnSave, btnCancel;
+    private Button btnSave, btnCancel, btnSearch;
 
     private PhieuMuonDao phieuMuonDao;
     private PhieuMuonAdapter adapter;
@@ -69,14 +72,17 @@ public class PhieuMuonFragment extends Fragment {
     private SachDao sachDao;
     private Sach sach;
     private int maSach, tienThue, positionSach;
+    private boolean isSearch = false;
 
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat stf = new SimpleDateFormat("HH:mm");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_phieu_muon, container, false);
+        edSearch = v.findViewById(R.id.edSearch);
         lvPM = v.findViewById(R.id.lvPM);
         fab = v.findViewById(R.id.fab);
         phieuMuonDao = new PhieuMuonDao(getActivity());
@@ -91,10 +97,37 @@ public class PhieuMuonFragment extends Fragment {
         lvPM.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                item = list.get(position);
+
+                if (isSearch) {
+                    item = temp.get(position);
+                } else {
+                    item = list.get(position);
+                }
                 openDialog(getActivity(), 1);
                 return false;
             }
+        });
+
+        edSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String query = s.toString();
+                if (query.isEmpty()) {
+                    isSearch = false;
+                    capNhatLv();
+                } else {
+                    isSearch = true;
+                    temp = phieuMuonDao.filterSearch(query);
+                    adapter = new PhieuMuonAdapter(getActivity(), PhieuMuonFragment.this, temp);
+                    lvPM.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
         });
 
         return v;
@@ -110,6 +143,7 @@ public class PhieuMuonFragment extends Fragment {
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.phieu_muon_dialog);
         edMaPM = dialog.findViewById(R.id.edMaPM);
+        edMaBienLai = dialog.findViewById(R.id.edMaBienLai);
         spTV = dialog.findViewById(R.id.spTV);
         spSach = dialog.findViewById(R.id.spSach);
         tvNgay = dialog.findViewById(R.id.tvNgay);
@@ -160,10 +194,10 @@ public class PhieuMuonFragment extends Fragment {
             }
         });
 
-
         edMaPM.setEnabled(false);
         if (type == 1) {
             edMaPM.setText(String.valueOf(item.getMaPM()));
+            edMaBienLai.setText(String.valueOf(item.getMaBienLai()));
 
             for (int i = 0; i < thanhVienList.size(); i++) {
                 if (item.getMaTV() == (thanhVienList.get(i).getMaTV())) {
@@ -186,6 +220,8 @@ public class PhieuMuonFragment extends Fragment {
             } else {
                 chkTraSach.setChecked(false);
             }
+
+
         }
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,33 +233,42 @@ public class PhieuMuonFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                item = new PhieuMuon();
-                item.setMaTV(maThanhVien);
-                item.setMaSach(maSach);
-                item.setNgay(new Date());
-                item.setTienThue(tienThue);
-                if (chkTraSach.isChecked()) {
-                    item.setTraSach(1);
-                } else {
-                    item.setTraSach(0);
+                if (validate()) {
+                    item = new PhieuMuon();
+                    Date time = new Date();
+                    item.setMaTV(maThanhVien);
+                    item.setMaBienLai(edMaBienLai.getText().toString());
+                    item.setMaSach(maSach);
+                    item.setNgay(time);
+                    item.setGioMuonSach(time);
+                    item.setTienThue(tienThue);
+
+                    if (chkTraSach.isChecked()) {
+                        item.setTraSach(1);
+                    } else {
+                        item.setTraSach(0);
+                    }
+
+                    if (type == 0) {
+                        if (phieuMuonDao.insert(item) > 0) {
+                            Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        item.setMaPM(Integer.parseInt(edMaPM.getText().toString()));
+                        if (phieuMuonDao.update(item) > 0) {
+                            Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    edSearch.setText("");
+                    isSearch = false;
+                    capNhatLv();
+                    dialog.dismiss();
                 }
 
-                if (type == 0) {
-                    if (phieuMuonDao.insert(item) > 0) {
-                        Toast.makeText(context, "Thêm thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Thêm thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    item.setMaPM(Integer.parseInt(edMaPM.getText().toString()));
-                    if (phieuMuonDao.update(item) > 0) {
-                        Toast.makeText(context, "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                capNhatLv();
-                dialog.dismiss();
             }
         });
         dialog.show();
@@ -252,5 +297,13 @@ public class PhieuMuonFragment extends Fragment {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public boolean validate() {
+        if (edMaBienLai.getText().length() == 0) {
+            Toast.makeText(getContext(), "Bạn phải nhập mã biên lai", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }

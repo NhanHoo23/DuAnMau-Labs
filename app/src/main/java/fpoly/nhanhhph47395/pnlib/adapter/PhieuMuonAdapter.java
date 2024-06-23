@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import fpoly.nhanhhph47395.pnlib.R;
@@ -29,7 +32,7 @@ public class PhieuMuonAdapter extends ArrayAdapter<PhieuMuon> {
     private PhieuMuonFragment fragment;
     private List<PhieuMuon> list;
 
-    private TextView tvMaPM, tvTenTV, tvTenSach, tvTienThue, tvNgay, tvTraSach;
+    private TextView tvMaPM, tvMaBienLai, tvTenTV, tvTenSach, tvTienThue, tvNgay, tvTraSach;
     private ImageView imgDel;
 
     private SachDao sachDao;
@@ -54,6 +57,9 @@ public class PhieuMuonAdapter extends ArrayAdapter<PhieuMuon> {
         if (item != null) {
             tvMaPM = v.findViewById(R.id.tvMaPM);
             tvMaPM.setText("Mã Phiếu Mượn: " + item.getMaPM());
+
+            tvMaBienLai = v.findViewById(R.id.tvMaBienLai);
+            tvMaBienLai.setText("Mã biên lai: " + item.getMaBienLai());
 
             thanhVienDao = new ThanhVienDao(context);
             ThanhVien thanhVien = thanhVienDao.getID(String.valueOf(item.getMaTV()));

@@ -70,14 +70,18 @@ public class DoanhThuFragment extends Fragment {
         btnDoanhThu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String tuNgay = edTuNgay.getText().toString();
-                String denNgay = edDenNgay.getText().toString();
-                ThongKeDao thongKeDao = new ThongKeDao(getActivity());
-                tvDoanhThu.setText("Doanh Thu: " + thongKeDao.getDoanhThu(tuNgay, denNgay) + "VND");
+                capNhatDoanhThu();
             }
         });
 
         return v;
+    }
+
+    void capNhatDoanhThu() {
+        String tuNgay = edTuNgay.getText().toString();
+        String denNgay = edDenNgay.getText().toString();
+        ThongKeDao thongKeDao = new ThongKeDao(getActivity());
+        tvDoanhThu.setText("Doanh Thu: " + thongKeDao.getDoanhThu(tuNgay, denNgay) + "VND");
     }
 
     DatePickerDialog.OnDateSetListener mDateTuNgay = new DatePickerDialog.OnDateSetListener() {
